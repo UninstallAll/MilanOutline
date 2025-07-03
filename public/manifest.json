@@ -1,65 +1,38 @@
-﻿{
+{
   "manifest_version": 3,
-  "name": "MilanOutline",
+  "name": "MilanOutline - 大纲整理助手",
   "version": "1.0.0",
-  "description": "轻量级大纲管理工具，支持层次化内容组织和拖拽排序",
+  "description": "为MilanNote提供智能大纲整理和总结功能",
   "permissions": [
+    "activeTab",
     "storage",
-    "activeTab"
+    "scripting"
   ],
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["src/content/index.ts"],
-      "css": ["src/content/content.css"]
-    }
+  "host_permissions": [
+    "https://milanote.com/*",
+    "https://app.milanote.com/*"
   ],
   "background": {
-    "service_worker": "src/background/index.ts"
+    "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://milanote.com/*",
+        "https://app.milanote.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
   "action": {
-    "default_popup": "src/popup/popup.html",
-    "default_title": "MilanOutline - 大纲管理",
-    "default_icon": {
-      "16": "public/icons/icon-16.png",
-      "32": "public/icons/icon-32.png",
-      "48": "public/icons/icon-48.png",
-      "128": "public/icons/icon-128.png"
-    }
-  },
-  "icons": {
-    "16": "public/icons/icon-16.png",
-    "32": "public/icons/icon-32.png",
-    "48": "public/icons/icon-48.png",
-    "128": "public/icons/icon-128.png"
-  },
-  "commands": {
-    "toggle-outline": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+O",
-        "mac": "Command+Shift+O"
-      },
-      "description": "切换大纲侧边栏显示/隐藏"
-    },
-    "add-node": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+N",
-        "mac": "Command+Shift+N"
-      },
-      "description": "添加新的大纲节点"
-    },
-    "focus-search": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+F",
-        "mac": "Command+Shift+F"
-      },
-      "description": "聚焦到搜索框"
-    }
+    "default_popup": "popup.html",
+    "default_title": "MilanOutline"
   },
   "web_accessible_resources": [
     {
-      "resources": ["src/content/*", "public/*"],
-      "matches": ["<all_urls>"]
+      "resources": ["icons/*", "*.css"],
+      "matches": ["https://milanote.com/*", "https://app.milanote.com/*"]
     }
   ]
 }
